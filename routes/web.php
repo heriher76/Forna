@@ -29,6 +29,7 @@ Route::get('/', 'PagesController@index');
 
 Route::get('/news', 'PagesController@news');
 Route::get('/news/{slug}', 'PagesController@showNews');
+Route::post('/news/{id}/send-comment', 'PagesController@sendComment');
 
 Route::get('/contact', 'PagesController@contact');
 

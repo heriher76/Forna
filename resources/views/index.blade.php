@@ -67,11 +67,11 @@
 
     <div class="row">
       @foreach($allNews as $news)
-      <div class="col-md-4">
+      <div class="col-md-4"><a href="{{ url('news/'.$news->slug) }}">
         <div class="step">
           <h4>{{ $news->title }}</h4>
           <p>{!! \Str::limit($news->description, $limit = 150, $end = '...') !!}</p>
-        </div>
+        </div></a>
       </div>
       @endforeach
     </div>

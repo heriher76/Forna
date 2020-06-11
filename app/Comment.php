@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['content', 'user_id', 'news_id']
+    protected $fillable = ['content', 'user_id', 'news_id'];
 
     public function user()
     {
@@ -16,5 +16,5 @@ class Comment extends Model
     public function news()
     {
       return $this->belongsTo('App\News', 'news_id');
-    };
+    }
 }

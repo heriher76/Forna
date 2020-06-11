@@ -7,6 +7,7 @@ use Pravodev\KawalCorona\KawalCorona;
 use App\News;
 use App\Contact;
 use App\Fact;
+use App\Comment;
 
 class PagesController extends Controller
 {
@@ -31,6 +32,26 @@ class PagesController extends Controller
       $allNews = News::orderBy('created_at', 'desc')->get();
 
       return view('news', compact('allNews'));
+    }
+
+    public function showNews($slug)
+    {
+      $news = News::where('slug', $slug)->first();
+
+      return view('show-news', compact('news'));
+    }
+
+    public function sendComment(Request $request, $id)
+    {
+      $input = $request->all();
+
+      Comment::create([
+        'content' => $input['content'],
+        'user_id' => \Auth::user()->id,
+        'news_id' => $id
+      ]);
+
+      return back();
     }
 
     public function contact()

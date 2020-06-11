@@ -35,7 +35,7 @@
       @foreach($allNews as $news)
       <div class="col-md-4">
         <div class="post-entry">
-          <a href="blog-single.html" class="d-block mb-4">
+          <a href="{{ url('news/'.$news->slug) }}" class="d-block mb-4">
             <img src="{{ url('news-thumbnail/'.$news->thumbnail) }}" alt="Image" class="img-fluid">
           </a>
           <div class="post-text">
