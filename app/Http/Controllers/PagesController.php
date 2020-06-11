@@ -13,6 +13,7 @@ class PagesController extends Controller
 {
     public function index()
     {
+      set_time_limit(0);
       $corona = new KawalCorona;
 
       $indonesia = $corona->getIndonesia();
