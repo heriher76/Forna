@@ -34,6 +34,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 blog-content">
+        <center>
+          <img src="{{ url('news-thumbnail/'.$news->thumbnail) }}" class="img-responsive" style="width: 40vw;">
+        <br><br>
+        </center>
         {!! $news->description !!}
         <div class="pt-5">
           <h3 class="mb-5">{{count($news->comments) }} Komentar</h3>

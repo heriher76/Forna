@@ -66,6 +66,22 @@
               @guest
               <li><a href="{{ url('/login') }}" class="nav-link">Login</a></li>
               @else
+              <li class="has-children">
+                <a href="#" class="nav-link">Hi, {{\Auth::user()->name}} !</a>
+                <ul class="dropdown">
+                  <li><a href="{{ url('my-profile') }}" class="nav-link">Profil Saya</a></li>
+                  <li>
+                    <a class="nav-link" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                  </li>
+                </ul>
+              </li>
               @endguest
             </ul>
           </nav>

@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\AdminPagesController@index');
 
     Route::resource('/users', 'Admin\UserController');
@@ -23,14 +23,20 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::resource('/messages', 'Admin\MessageController');
 });
 
-Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+  Route::post('/news/{id}/send-comment', 'PagesController@sendComment');
+});
 
-Route::get('/', 'PagesController@index');
+Auth::routes();
 
 Route::get('/news', 'PagesController@news');
 Route::get('/news/{slug}', 'PagesController@showNews');
-Route::post('/news/{id}/send-comment', 'PagesController@sendComment');
 
 Route::get('/contact', 'PagesController@contact');
 
 Route::post('/send-message', 'Admin\MessageController@store');
+
+Route::get('/my-profile', 'PagesController@myProfile');
+Route::put('/my-profile', 'PagesController@updateProfile');
+
+Route::get('/', 'PagesController@index');

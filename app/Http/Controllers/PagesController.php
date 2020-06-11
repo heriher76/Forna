@@ -58,4 +58,44 @@ class PagesController extends Controller
     {
       return view('contact');
     }
+
+    public function myProfile()
+    {
+      $user = \Auth::user();
+
+      return view('my-profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+      $user = \Auth::user();
+
+      $input = $request->all();
+
+      if (isset($input['photo'])) {
+          $namaThumbnail = \Str::random(32).'.'.$input['photo']->getClientOriginalExtension();
+
+          if (isset($user->photo)) {
+              unlink(public_path('profile-photo/'.$user->photo));
+          }
+          $input['photo']->move(public_path("profile-photo/"), $namaThumbnail);
+
+          $user->update([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'address' => $input['address'],
+            'photo' => $namaThumbnail
+          ]);
+      }else{
+          $user->update([
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'address' => $input['address']
+          ]);
+      }
+
+      alert()->success('Profil Berhasil Diubah !', '...');
+
+      return back();
+    }
 }
