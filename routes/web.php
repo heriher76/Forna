@@ -13,8 +13,23 @@
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/', 'Admin\AdminPagesController@index');
+
+    Route::resource('/users', 'Admin\UserController');
+
+    Route::resource('/news', 'Admin\NewsController');
+
+    Route::resource('/facts', 'Admin\FactController');
+
+    Route::resource('/messages', 'Admin\MessageController');
 });
 
 Auth::routes();
 
 Route::get('/', 'PagesController@index');
+
+Route::get('/news', 'PagesController@news');
+Route::get('/news/{slug}', 'PagesController@showNews');
+
+Route::get('/contact', 'PagesController@contact');
+
+Route::post('/send-message', 'Admin\MessageController@store');

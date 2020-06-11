@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Pravodev\KawalCorona\KawalCorona;
+use App\News;
+use App\Contact;
+use App\Fact;
 
 class PagesController extends Controller
 {
@@ -17,12 +20,17 @@ class PagesController extends Controller
       $globalSembuh = $corona->getSembuh();
       $globalMati = $corona->getMeninggal();
 
-      return view('index', compact('indonesia', 'jawaBarat', 'globalPositif', 'globalSembuh', 'globalMati'));
+      $allNews = News::orderBy('created_at', 'desc')->get();
+      $allFacts = Fact::orderBy('created_at', 'desc')->get();
+
+      return view('index', compact('indonesia', 'jawaBarat', 'globalPositif', 'globalSembuh', 'globalMati', 'allNews', 'allFacts'));
     }
 
     public function news()
     {
-      return view('news');
+      $allNews = News::orderBy('created_at', 'desc')->get();
+
+      return view('news', compact('allNews'));
     }
 
     public function contact()

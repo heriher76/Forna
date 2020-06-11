@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
       return $this->belongsTo('App\Role', 'role_id');
     }
+
+    public function allNews()
+    {
+      return $this->hasMany('App\News', 'user_id');
+    }
 }

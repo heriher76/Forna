@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
@@ -12,10 +13,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+     public function index()
+     {
+     	$users = User::all();
+
+     	return view('admin.users.index', compact('users'));
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -78,8 +81,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+     public function destroy($id)
+     {
+       User::destroy($id);
+
+       alert()->success('User Berhasil Dihapus !', '...');
+
+       return back();
+     }
 }

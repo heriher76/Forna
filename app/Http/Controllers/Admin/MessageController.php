@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Message;
 
 class MessageController extends Controller
 {
@@ -14,7 +15,9 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $messages = Message::orderBy('created_at', 'desc')->get();
+
+        return view('admin.messages.index', compact('messages'));
     }
 
     /**
@@ -35,29 +38,17 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $input = $request->all();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        Message::create([
+            'name' => $input['name'],
+            'message' => $input['message'],
+            'email' => $input['email']
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        alert()->success('Fakta Berhasil Dibuat !', '...');
+
+        return 'Terimakasih! Masukan anda sudah terkirim';
     }
 
     /**
@@ -67,9 +58,11 @@ class MessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function show($id)
     {
-        //
+        $fact = Message::where('id', $id)->first();
+
+        return view('admin.messages.show', compact('fact'));
     }
 
     /**
@@ -80,6 +73,14 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fact = Message::where('id', $id)->first();
+
+        $fact->destroy($id);
+
+        alert()->success('Masukan Berhasil Dihapus !', '...');
+
+        return redirect()->action(
+            'Admin\MessageController@index'
+        );
     }
 }
